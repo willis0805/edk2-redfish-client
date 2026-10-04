@@ -44,7 +44,7 @@ From the root of this repository:
 ```sh
 sudo apt-get update
 sudo apt-get install -y build-essential git uuid-dev nasm python3-venv \
-  pkg-config libx11-dev libxext-dev libslirp-dev
+  pkg-config libx11-dev libxext-dev libslirp-dev libglib2.0-dev
 python3 -m venv .venv
 .venv/bin/pip install -r Tools/Redfish-Profile-Simulator/requirements.txt
 python3 Tools/LinuxEmulator/bootstrap.py .linux-emulator

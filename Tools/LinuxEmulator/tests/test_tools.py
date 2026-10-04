@@ -399,6 +399,24 @@ class RuntimeTests(unittest.TestCase):
         self.assertFalse(json.loads((self.output / "result.json").read_text())["passed"])
 
 
+@unittest.skipUnless(sys.platform.startswith("linux"), "Native SNP harness is Linux-specific")
+class NativeDependencyTests(unittest.TestCase):
+    def test_pkg_config_failure_stops_before_compiling(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pkg_config = put(root, "pkg-config", "#!/bin/sh\nexit 73\n")
+            pkg_config.chmod(0o755)
+            compiler = put(root, "compiler", "#!/bin/sh\ntouch \"$COMPILED_MARKER\"\nexit 66\n")
+            compiler.chmod(0o755)
+            marker = root / "compiled"
+            environment = dict(os.environ, PATH=str(root) + os.pathsep + os.environ["PATH"],
+                               CC=str(compiler), COMPILED_MARKER=str(marker))
+            result = subprocess.run(["bash", str(Path(__file__).resolve().parents[1] / "Host/test.sh"), str(root)],
+                                    env=environment, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 73, result.stderr)
+            self.assertFalse(marker.exists())
+
+
 @unittest.skipUnless(sys.platform.startswith("linux"), "PTY lifecycle is Linux-specific")
 class HostLifecycleTests(unittest.TestCase):
     def setUp(self):

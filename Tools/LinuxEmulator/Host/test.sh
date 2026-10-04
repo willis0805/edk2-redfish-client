@@ -17,8 +17,11 @@ if [[ $# == 2 ]]; then
   libs=( -L"$deps/usr/lib/x86_64-linux-gnu" -lslirp )
   export LD_LIBRARY_PATH="$deps/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 else
-  read -r -a slirp_cflags <<< "$(pkg-config --cflags slirp)"
-  read -r -a libs <<< "$(pkg-config --libs slirp)"
+  # Keep command substitutions separate so set -e observes dependency failures.
+  cflags=$(pkg-config --cflags slirp)
+  ldflags=$(pkg-config --libs slirp)
+  read -r -a slirp_cflags <<< "$cflags"
+  read -r -a libs <<< "$ldflags"
   includes+=( "${slirp_cflags[@]}" )
 fi
 flags=( -std=gnu11 -g -O1 -Wall -Wextra -Werror -fshort-wchar -DEFIAPI= -include Base.h )

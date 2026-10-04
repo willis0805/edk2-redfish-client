@@ -14,9 +14,10 @@ jobs=${2:-2}
 for tool in gcc g++ make nasm pkg-config python3; do
   command -v "$tool" >/dev/null || { echo "Missing tool: $tool" >&2; exit 2; }
 done
-pkg-config --atleast-version=4.7 slirp || { echo 'Install libslirp-dev >= 4.7' >&2; exit 2; }
-export SLIRP_CFLAGS="$(pkg-config --cflags slirp)"
-export SLIRP_LIBS="$(pkg-config --libs slirp)"
+pkg-config --atleast-version=4.7 slirp || { echo 'Install libslirp-dev >= 4.7 and libglib2.0-dev' >&2; exit 2; }
+SLIRP_CFLAGS=$(pkg-config --cflags slirp)
+SLIRP_LIBS=$(pkg-config --libs slirp)
+export SLIRP_CFLAGS SLIRP_LIBS
 python3 "$here/prepare.py" "$edk2"
 export PACKAGES_PATH="$edk2:$repo"
 export PYTHON_COMMAND=python3

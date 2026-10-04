@@ -24,9 +24,10 @@ all tracked edk2 files and initialized submodules remain unchanged.
 2. Simulator: 30 tests passed, including real HTTP/HTTPS on ephemeral loopback
    ports, CLI startup from another directory, authentication, mutation/readback,
    ETag header changes, and credential-log regression checks.
-3. Tooling: 27 tests passed, including pin/dirty-tree refusal, deterministic
+3. Tooling: 28 tests passed, including pin/dirty-tree refusal, deterministic
    overlay generation, symlink refusal, SEC backport boundaries, unchanged
-   upstream inputs and pre-existing shell startup scripts, private NVRAM, timeout/reaping, and success/failure oracles.
+   upstream inputs and pre-existing shell startup scripts, dependency fail-fast,
+   private NVRAM, timeout/reaping, and success/failure oracles.
 4. Native SNP backend: strict GCC warnings and real libslirp ARP plus
    bidirectional loopback UDP passed. State transitions, receive filters,
    bounded queues, FIFO transmit recycling, interrupt clearing, short-buffer

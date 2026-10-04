@@ -1,0 +1,19 @@
+{
+  "edk2_repository": "https://github.com/tianocore/edk2.git",
+  "edk2_tag": "edk2-stable202608",
+  "edk2_commit": "2970e5699ba6267f3384ffab20f96647578aebc8",
+  "client_baseline": "92fabf8572c226cf180c62b1204380385a518db3",
+  "architecture": "X64",
+  "toolchain": "GCC",
+  "submodules": [
+    "BaseTools/Source/C/BrotliCompress/brotli",
+    "MdeModulePkg/Library/BrotliCustomDecompressLib/brotli",
+    "MdeModulePkg/Universal/RegularExpressionDxe/oniguruma",
+    "MdePkg/Library/BaseFdtLib/libfdt",
+    "RedfishPkg/Library/JsonLib/jansson",
+    "CryptoPkg/Library/OpensslLib/openssl",
+    "CryptoPkg/Library/MbedTlsLib/mbedtls",
+    "MdePkg/Library/MipiSysTLib/mipisyst",
+    "SecurityPkg/DeviceSecurity/SpdmLib/libspdm"
+  ]
+}

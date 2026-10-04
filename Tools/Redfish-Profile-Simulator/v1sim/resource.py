@@ -31,8 +31,8 @@ class RfResource:
         indx_file_path = os.path.join(path, "index.json")
         print("*****Loading Mockup json file:{}".format(indx_file_path))
         if os.path.exists(indx_file_path):
-            res_file = open(indx_file_path, "r")
-            res_rawdata = res_file.read()
+            with open(indx_file_path, "r", encoding="utf-8") as res_file:
+                res_rawdata = res_file.read()
             self.res_data = json.loads(res_rawdata,object_pairs_hook=OrderedDict)
             self.create_sub_objects(base_path, rel_path)
             self.final_init_processing(base_path, rel_path)
@@ -94,8 +94,8 @@ class RfResourceRaw:
         path = os.path.join(base_path, rel_path)
         indx_file_path = os.path.join(path, "index.xml")
         print("*****Loading Mockup raw data file:{}".format(indx_file_path))
-        res_file = open(indx_file_path, "r")
-        res_raw_data = res_file.read()
+        with open(indx_file_path, "r", encoding="utf-8") as res_file:
+            res_raw_data = res_file.read()
         self.res_data = res_raw_data
         self.create_subobjects(base_path, rel_path)
         self.final_init_processing(base_path, rel_path)

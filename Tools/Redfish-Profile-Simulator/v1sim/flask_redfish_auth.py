@@ -101,8 +101,6 @@ class HTTPAuth(object):
         @wraps(f)
         def decorated(*args, **kwargs):
             auth = request.authorization
-            print("in rfAuthRequired")
-            print("headers: {}".format(request.headers))
             # We need to ignore authentication headers for OPTIONS to avoid
             # unwanted interactions with CORS.
             # Chrome and Firefox issue a preflight OPTIONS request to check

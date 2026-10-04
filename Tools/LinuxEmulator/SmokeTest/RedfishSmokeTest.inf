@@ -1,0 +1,33 @@
+## @file
+# Linux emulator firmware-to-mock Redfish smoke test.
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+##
+[Defines]
+  INF_VERSION = 0x00010005
+  BASE_NAME = RedfishSmokeTest
+  FILE_GUID = A9FA60E6-870A-4198-81E2-868F10325B27
+  MODULE_TYPE = UEFI_APPLICATION
+  VERSION_STRING = 1.0
+  ENTRY_POINT = UefiMain
+[Sources]
+  RedfishSmokeTest.c
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  RedfishPkg/RedfishPkg.dec
+  RedfishClientPkg/RedfishClientPkg.dec
+  ShellPkg/ShellPkg.dec
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiBootServicesTableLib
+  UefiLib
+  BaseLib
+  BaseMemoryLib
+  PrintLib
+  JsonLib
+[Protocols]
+  gEdkIIRedfishFeatureProtocolGuid
+  gEdkIIRedfishHttpProtocolGuid
+  gEfiRestExServiceBindingProtocolGuid
+  gEfiRestExProtocolGuid
+  gEfiShellParametersProtocolGuid

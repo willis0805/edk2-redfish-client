@@ -69,3 +69,7 @@ cd $PWD/edk2
 . ./edksetup.sh
 build -p RedfishClientPkg/RedfishClientPkg.dsc -t GCC5 -a X64
 ```
+
+# Linux firmware emulation
+See [the native Linux Redfish emulator workflow](Tools/LinuxEmulator/README.md) for
+a rootless, headless UEFI build and an actual firmware-to-local-mock integration test.

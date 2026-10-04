@@ -19,16 +19,15 @@ from .flask_redfish_auth import RfHTTPBasicOrTokenAuth
 from redfishProfileSimulator import conditional
 from v1sim.resource import RfCollection, RfResource, RfResourceRaw
 
-from werkzeug.serving import WSGIRequestHandler
-
-def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key=""):
+def create_app(root, versions):
+    """Build the simulator app without opening a socket (useful for isolated tests)."""
     app = Flask(__name__)
 
     # create auth class that does basic or redifish session auth
     auth = RfHTTPBasicOrTokenAuth()
 
     # define basic auth decorator used by flask
-    # for basic auth, we only support user=catfish, passwd=hunter
+    # Fixed demonstration credentials, not a production authentication service.
     @auth.verify_basic_password
     def verify_rf_passwd(user, passwd):
         if user == "admin":
@@ -37,7 +36,7 @@ def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key
         return False
 
     # define Redfish Token/Session auth decorator used by flask
-    # for session token auth, only support toden: 123456CATFISHauthcode
+    # Session tokens are fixed demonstration values.
     @auth.verify_token
     def verify_rf_token(auth_token):
         # lookup the user for this token
@@ -53,13 +52,13 @@ def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key
 
     # GET /redfish
     @app.route("/redfish", methods=['GET'])
-    #@app.route("/redfish/", methods=['GET'])
+    @app.route("/redfish/", methods=['GET'])
     def rf_versions():
         return versions.get_resource()
 
     # GET /redfish/v1
     @app.route("/redfish/v1", methods=['GET'])
-    #@app.route("/redfish/v1/", methods=['GET'])
+    @app.route("/redfish/v1/", methods=['GET'])
     def rf_service_root():
         return root.get_resource()
 
@@ -279,9 +278,7 @@ def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key
     # login API,  user catfish, password=hunter, authToken=123456CATFISHauthcode
     @app.route("/redfish/v1/SessionService/Sessions", methods=['POST'])
     def rf_login():
-        print("login")
         rdata = json.loads(request.data,object_pairs_hook=OrderedDict)
-        print("rdata:{}".format(rdata))
         if rdata["UserName"] == "root" and rdata["Password"] == "password123456":
             x = {"Id": "SESSION123456"}
             resp = json.dumps(x)
@@ -384,12 +381,16 @@ def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key
     # END file redfishURIs
     # start Flask REST engine running
 
-    if key != "" and cert != "":
-        app.run(host=host, port=port, ssl_context=(cert, key))
-    else:
-        app.run(host=host, port=port)
+    return app
 
-    # never returns
+
+def rfApi_SimpleServer(root, versions, host="127.0.0.1", port=5000, cert="", key=""):
+    """Run the same development service on Windows or Linux."""
+    app = create_app(root, versions)
+    options = {'host': host, 'port': port, 'debug': False, 'use_reloader': False}
+    if key and cert:
+        options['ssl_context'] = (cert, key)
+    app.run(**options)
 
 '''
 reference source links:

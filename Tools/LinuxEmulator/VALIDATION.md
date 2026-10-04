@@ -10,7 +10,7 @@ was changed.
 - EDK II: `2970e5699ba6267f3384ffab20f96647578aebc8` (`edk2-stable202608`)
 - GCC: Debian 14.2.0-19
 - NASM: 2.16.03
-- libslirp: 4.8.0
+- libslirp: 4.7.0 and 4.8.0
 - Python: 3.12.14
 - Flask: 3.0.0; Werkzeug: 3.1.9
 - C formatting: Tianocore uncrustify 73.0.11, configuration from the pinned edk2
@@ -38,7 +38,8 @@ all tracked edk2 files and initialized submodules remain unchanged.
 6. Complete DEBUG X64 UEFI image built successfully, including the Linux Host,
    Redfish foundation, client drivers, and smoke application. Firmware volume:
    3,680,648 bytes used of 13,107,200 (28%).
-7. Three independent firmware smoke runs passed with fresh firmware/NVRAM copies:
+7. Repeated firmware smoke runs passed with fresh firmware/NVRAM copies,
+   including runs using both libslirp 4.7.0 and 4.8.0:
    SEC, PEI, DXE, UEFI Shell, and the smoke application actually executed.
    Each exited 0 and recorded eight successful local HTTP requests. A separate
    actual-firmware run deliberately returned HTTP 401 for Systems: the oracle

@@ -191,7 +191,7 @@ SnpAccept (
 }
 
 STATIC
-slirp_ssize_t
+ssize_t
 SnpSendPacket (
   CONST VOID  *Buffer,
   size_t      Length,
@@ -212,7 +212,7 @@ SnpSendPacket (
   {
     Private->Statistics.RxDroppedFrames++;
     /* Dropping when the bounded queue is full is permitted by libslirp. */
-    return (slirp_ssize_t)Length;
+    return (ssize_t)Length;
   }
 
   Packet = &Private->Rx[(Private->RxHead + Private->RxCount) % SNP_QUEUE_SIZE];
@@ -229,7 +229,7 @@ SnpSendPacket (
     Private->Statistics.RxUnicastFrames++;
   }
 
-  return (slirp_ssize_t)Length;
+  return (ssize_t)Length;
 }
 
 STATIC

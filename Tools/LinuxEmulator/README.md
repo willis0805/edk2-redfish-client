@@ -28,7 +28,7 @@ HTTP service for tests. Its Python tests alone are **not firmware emulation**.
 - Linux x86-64, Python 3.10+, native GCC 13 or newer, EDK toolchain tag `GCC`
 - edk2-stable202608, commit `2970e5699ba6267f3384ffab20f96647578aebc8`
 - edk2-redfish-client baseline `92fabf8572c226cf180c62b1204380385a518db3`
-- libslirp 4.7 or newer (4.8.0 used for development)
+- libslirp 4.7 or newer (4.7.0 and 4.8.0 tested)
 - All edk2 submodules are checked out at the gitlinks of that exact commit.
   No edk2-platforms checkout is needed.
 
@@ -144,7 +144,7 @@ by a Linux test result.
   provisioning, reset/boot effects on a physical system, or all feature drivers.
 - Host networking is user-mode NAT, not an Ethernet bridge. It cannot reproduce
   physical link behavior, VLAN topology, or broadcast discovery on a real LAN.
-- Linux X64 is the initial target. IA32, ARM, macOS, and other libslirp versions
+- Linux X64 is the initial target. IA32, ARM, macOS, and libslirp versions beyond 4.7/4.8
   have not been validated by this workflow.
 - Kernel policies may prohibit process execution, executable memory, PTYs or
   loopback sockets. Report the precise failure; do not disable security controls
